@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Materi — Turunan</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <!-- Desmos API: dipakai di halaman ini DAN halaman Visualisasi (4) -->
+  <script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+  <!-- MathJax: dipakai untuk render rumus matematika \[ ... \] di semua halaman -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+</head>
+<body>
+  <div class="page">
+
+    <div id="navbar"></div>
+
+    <div class="page-body">
+
+      <aside class="sidebar">
+        <p class="sidebar-title">Materi</p>
+        <ul class="sidebar-list">
+          <li><a href="#definisi" class="active" id="link-definisi">2.1 Definisi Turunan</a></li>
+          <li><a href="#interpretasi" id="link-interpretasi">2.2 Interpretasi Geometri</a></li>
+          <li><a href="#notasi" id="link-notasi">2.3 Notasi Turunan</a></li>
+        </ul>
+      </aside>
+
+      <main class="main-content">
+
+        <!-- 2.1 DEFINISI TURUNAN -->
+        <section id="definisi">
+          <h1 class="materi-header">2.1 Definisi Turunan</h1>
+          <p class="materi-intro">
+            Turunan dari fungsi <em>f(x)</em> di titik <em>x</em> didefinisikan sebagai limit berikut:
+          </p>
+
+          <div class="formula-box">
+            \[ f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h} \]
+          </div>
+
+          <p class="materi-intro mt-16">
+            Gunakan visualisasi interaktif di bawah ini untuk memahami konsep limit pada
+            definisi turunan. Geser slider <strong>x</strong> dan <strong>h</strong> untuk melihat
+            bagaimana garis sekan (garis AB) mendekati garis singgung saat h mendekati 0.
+          </p>
+
+          <div class="desmos-panel">
+            <div class="desmos-panel-header">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              Desmos Graphing Calculator
+            </div>
+            <div id="calculator-definisi" class="desmos-calc"></div>
+            <div class="desmos-controls">
+              <div class="desmos-slider-group">
+                <label for="slider-x">x = <span id="label-x">1.00</span></label>
+                <input type="range" id="slider-x" min="-3" max="3" step="0.1" value="1" />
+              </div>
+              <div class="desmos-slider-group">
+                <label for="slider-h">h = <span id="label-h">0.50</span></label>
+                <input type="range" id="slider-h" min="0.05" max="2" step="0.05" value="0.5" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2.2 INTERPRETASI GEOMETRI -->
+        <section id="interpretasi" class="mt-32">
+          <h1 class="materi-header">2.2 Interpretasi Geometri</h1>
+          <p class="materi-intro">
+            Secara geometris, <em>f'(x)</em> adalah kemiringan (gradien) garis singgung
+            kurva <em>y = f(x)</em> di titik <em>x</em>. Saat <em>h</em> mendekati 0, garis sekan
+            yang melalui titik A dan B pada grafik di atas akan mendekati garis singgung di titik A.
+          </p>
+          <div class="callout mt-16">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span>Coba geser slider <strong>h</strong> ke nilai yang sangat kecil pada grafik di atas, lalu perhatikan bagaimana garis AB berimpit dengan garis singgung.</span>
+          </div>
+        </section>
+
+        <!-- 2.3 NOTASI TURUNAN -->
+        <section id="notasi" class="mt-32">
+          <h1 class="materi-header">2.3 Notasi Turunan</h1>
+          <p class="materi-intro">Beberapa notasi yang umum digunakan untuk menyatakan turunan dari fungsi y = f(x):</p>
+          <table class="rules-table mt-16">
+            <thead>
+              <tr><th>Notasi</th><th>Dibaca</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>f'(x)</td><td>"f aksen x" (notasi Lagrange)</td></tr>
+              <tr><td>dy/dx</td><td>"dy per dx" (notasi Leibniz)</td></tr>
+              <tr><td>y'</td><td>"y aksen"</td></tr>
+              <tr><td>Dx[f(x)]</td><td>"D sub x dari f(x)" (notasi operator)</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/navbar.js"></script>
+  <script src="../js/desmos-helper.js"></script>
+  <script>
+    renderNavbar("materi");
+
+    const calcDefinisi = initDesmosCalculator("calculator-definisi", {
+      expressionsCollapsed: false,
+    });
+
+    if (calcDefinisi) {
+      calcDefinisi.setExpression({ id: "fn", latex: "f(x)=x^2" });
+      calcDefinisi.setExpression({
+        id: "sekan",
+        latex: "\\frac{f(x+h)-f(x)}{h}(t-x)+f(x)",
+        color: Desmos.Colors.RED,
+      });
+      calcDefinisi.setExpression({ id: "var-x", latex: "x=1" });
+      calcDefinisi.setExpression({ id: "var-h", latex: "h=0.5" });
+      calcDefinisi.setExpression({ id: "pointA", latex: "A=(x, f(x))", showLabel: true, label: "A" });
+      calcDefinisi.setExpression({ id: "pointB", latex: "B=(x+h, f(x+h))", showLabel: true, label: "B" });
+      calcDefinisi.setMathBounds({ left: -4, right: 4, bottom: -2, top: 8 });
+
+      setupSliderBinding(calcDefinisi, "x", "slider-x", "label-x", { min: -3, max: 3, step: 0.1, decimals: 2 });
+      setupSliderBinding(calcDefinisi, "h", "slider-h", "label-h", { min: 0.05, max: 2, step: 0.05, decimals: 2 });
+    }
+
+    // ---- Highlight menu sidebar sesuai section yang sedang dilihat ----
+const sections = ["definisi", "interpretasi", "notasi"];
+
+function setActiveLink(activeId) {
+  sections.forEach((id) => {
+    document.getElementById(`link-${id}`).classList.toggle("active", id === activeId);
+  });
+}
+
+let isClickScrolling = false;
+sections.forEach((id) => {
+  document.getElementById(`link-${id}`).addEventListener("click", () => {
+    setActiveLink(id);
+    isClickScrolling = true;
+    window.setTimeout(() => { isClickScrolling = false; }, 600);
+  });
+});
+
+window.addEventListener("scroll", () => {
+  if (isClickScrolling) return;
+  let current = sections[0];
+  sections.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 100) current = id;
+  });
+  setActiveLink(current);
+});
+  </script>
+</body>
+</html>

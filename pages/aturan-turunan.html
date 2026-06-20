@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aturan Turunan — Turunan</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <!-- MathJax: untuk render rumus matematika -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+</head>
+<body>
+  <div class="page">
+
+    <div id="navbar"></div>
+
+    <div class="page-body">
+
+      <aside class="sidebar">
+        <p class="sidebar-title">Aturan Turunan</p>
+        <ul class="sidebar-list">
+          <li><a href="#fungsi-dasar" class="active" id="link-fungsi-dasar">3.1 Fungsi Dasar</a></li>
+          <li><a href="#penjumlahan" id="link-penjumlahan">3.2 Penjumlahan &amp; Pengurangan</a></li>
+          <li><a href="#product-rule" id="link-product-rule">3.3 Product Rule</a></li>
+          <li><a href="#quotient-rule" id="link-quotient-rule">3.4 Quotient Rule</a></li>
+          <li><a href="#chain-rule" id="link-chain-rule">3.5 Chain Rule</a></li>
+        </ul>
+      </aside>
+
+      <main class="main-content">
+
+        <!-- 3.1 FUNGSI DASAR -->
+        <section id="fungsi-dasar">
+          <h1 class="materi-header">3.1 Fungsi Dasar</h1>
+          <p class="materi-intro">Berikut adalah turunan dari beberapa fungsi dasar.</p>
+
+          <table class="rules-table">
+            <thead>
+              <tr><th>Fungsi f(x)</th><th>Turunan f'(x)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>\( c \)</td><td>\( 0 \)</td></tr>
+              <tr><td>\( x^n \)</td><td>\( nx^{n-1} \)</td></tr>
+              <tr><td>\( \sin x \)</td><td>\( \cos x \)</td></tr>
+              <tr><td>\( \cos x \)</td><td>\( -\sin x \)</td></tr>
+              <tr><td>\( e^x \)</td><td>\( e^x \)</td></tr>
+              <tr><td>\( \ln x \)</td><td>\( \dfrac{1}{x} \)</td></tr>
+              <tr><td>\( a^x \)</td><td>\( a^x \ln a \)</td></tr>
+              <tr><td>\( \log_a x \)</td><td>\( \dfrac{1}{x \ln a} \)</td></tr>
+            </tbody>
+          </table>
+
+          <div class="callout mt-24">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span>Klik menu di samping untuk mempelajari aturan turunan lainnya beserta contoh interaktif.</span>
+          </div>
+        </section>
+
+        <!-- 3.2 PENJUMLAHAN & PENGURANGAN -->
+        <section id="penjumlahan" class="mt-32">
+          <h1 class="materi-header">3.2 Penjumlahan &amp; Pengurangan</h1>
+          <p class="materi-intro">
+            Turunan dari penjumlahan/pengurangan dua fungsi sama dengan penjumlahan/pengurangan turunan masing-masing fungsi.
+          </p>
+          <div class="formula-box">
+            \[ \big(f(x) \pm g(x)\big)' = f'(x) \pm g'(x) \]
+          </div>
+          <p class="materi-intro mt-16"><strong>Contoh:</strong> Jika \( f(x) = 3x^2 + 4x - 5 \), maka:</p>
+          <div class="formula-box mt-8">
+            \[ f'(x) = (3x^2)' + (4x)' - (5)' = 6x + 4 \]
+          </div>
+        </section>
+
+        <!-- 3.3 PRODUCT RULE -->
+        <section id="product-rule" class="mt-32">
+          <h1 class="materi-header">3.3 Product Rule</h1>
+          <p class="materi-intro">Digunakan untuk menurunkan hasil kali dua fungsi \( u(x) \) dan \( v(x) \):</p>
+          <div class="formula-box">
+            \[ (u \cdot v)' = u' \cdot v + u \cdot v' \]
+          </div>
+          <p class="materi-intro mt-16"><strong>Contoh:</strong> Jika \( f(x) = x^2 \sin x \), maka dengan \( u = x^2 \) dan \( v = \sin x \):</p>
+          <div class="formula-box mt-8">
+            \[ f'(x) = 2x \sin x + x^2 \cos x \]
+          </div>
+        </section>
+
+        <!-- 3.4 QUOTIENT RULE -->
+        <section id="quotient-rule" class="mt-32">
+          <h1 class="materi-header">3.4 Quotient Rule</h1>
+          <p class="materi-intro">Digunakan untuk menurunkan hasil bagi dua fungsi \( u(x) \) dan \( v(x) \):</p>
+          <div class="formula-box">
+            \[ \left(\frac{u}{v}\right)' = \frac{u' \cdot v - u \cdot v'}{v^2} \]
+          </div>
+          <p class="materi-intro mt-16"><strong>Contoh:</strong> Jika \( f(x) = \dfrac{x}{x+1} \), maka dengan \( u = x \) dan \( v = x+1 \):</p>
+          <div class="formula-box mt-8">
+            \[ f'(x) = \frac{1 \cdot (x+1) - x \cdot 1}{(x+1)^2} = \frac{1}{(x+1)^2} \]
+          </div>
+        </section>
+
+        <!-- 3.5 CHAIN RULE -->
+        <section id="chain-rule" class="mt-32">
+          <h1 class="materi-header">3.5 Chain Rule</h1>
+          <p class="materi-intro">Digunakan untuk menurunkan fungsi komposisi \( f(g(x)) \):</p>
+          <div class="formula-box">
+            \[ \big(f(g(x))\big)' = f'(g(x)) \cdot g'(x) \]
+          </div>
+          <p class="materi-intro mt-16"><strong>Contoh:</strong> Jika \( f(x) = \sin(2x) \), dengan \( u = 2x \):</p>
+          <div class="formula-box mt-8">
+            \[ f'(x) = \cos(2x) \cdot 2 = 2\cos(2x) \]
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/navbar.js"></script>
+  <script>
+    renderNavbar("aturan");
+
+   // ---- Highlight menu sidebar sesuai section yang sedang dilihat ----
+const sections = ["fungsi-dasar", "penjumlahan", "product-rule", "quotient-rule", "chain-rule"];
+
+function setActiveLink(activeId) {
+  sections.forEach((id) => {
+    document.getElementById(`link-${id}`).classList.toggle("active", id === activeId);
+  });
+}
+
+let isClickScrolling = false;
+sections.forEach((id) => {
+  document.getElementById(`link-${id}`).addEventListener("click", () => {
+    setActiveLink(id);
+    isClickScrolling = true;
+    window.setTimeout(() => { isClickScrolling = false; }, 600);
+  });
+});
+
+window.addEventListener("scroll", () => {
+  if (isClickScrolling) return;
+  let current = sections[0];
+  sections.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 100) current = id;
+  });
+  setActiveLink(current);
+});
+  </script>
+</body>
+</html>
