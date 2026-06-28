@@ -331,6 +331,10 @@ button {
   .page-body { flex-direction: column; }
   .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--color-border); }
   .viz-side { width: 100%; border-right: none; border-bottom: 1px solid var(--color-border); }
+  .quiz-layout { flex-direction: column; }
+  .quiz-progress-panel { width: 100%; }
+  .quiz-number-grid { flex-direction: row; flex-wrap: wrap; }
+  .quiz-explanation-panel { width: 100%; }
 }
 
 /* =========================================================
@@ -665,4 +669,500 @@ button {
 
 .rules-table tr:hover td {
   background: var(--color-primary-light);
+}
+
+/* =========================================================
+   HALAMAN: CONTOH SOAL (pages/contoh-soal.html)
+   ========================================================= */
+
+.soal-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-top: 18px;
+}
+
+.soal-text {
+  font-size: 15px;
+  margin-bottom: 16px;
+}
+
+.soal-text .soal-number {
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+.pembahasan-box {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-top: 16px;
+}
+
+.pembahasan-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.pembahasan-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.pembahasan-step-number {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.pembahasan-step-content {
+  font-size: 14.5px;
+}
+
+.pembahasan-result {
+  background: var(--color-success-bg);
+  border: 1px solid var(--color-success-border);
+  color: var(--color-success-text);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  font-size: 14.5px;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.soal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.soal-pagination {
+  font-size: 13.5px;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+/* =========================================================
+   HALAMAN: QUIZ (pages/quiz.html)
+   ========================================================= */
+
+.quiz-layout {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.quiz-progress-panel {
+  width: 130px;
+  flex-shrink: 0;
+}
+
+.quiz-progress-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+}
+
+.quiz-progress-count {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.quiz-progress-bar-track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-border);
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.quiz-progress-bar-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.quiz-number-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quiz-number-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s ease;
+}
+
+.quiz-number-btn:hover {
+  border-color: var(--color-primary);
+}
+
+.quiz-number-btn.current {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.quiz-number-btn.answered {
+  background: var(--color-success-bg);
+  border-color: var(--color-success-border);
+  color: var(--color-success-text);
+}
+
+.quiz-question-panel {
+  flex: 1;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+.quiz-question-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  margin-bottom: 10px;
+}
+
+.quiz-question-text {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 10px;
+  font-size: 14.5px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.quiz-option:hover {
+  border-color: var(--color-primary);
+}
+
+.quiz-option.selected {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  font-weight: 600;
+}
+
+.quiz-option.correct {
+  border-color: var(--color-success-border);
+  background: var(--color-success-bg);
+  font-weight: 600;
+}
+
+.quiz-option.incorrect {
+  border-color: #fca5a5;
+  background: #fee2e2;
+  font-weight: 600;
+}
+
+.quiz-option-radio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quiz-option.selected .quiz-option-radio,
+.quiz-option.correct .quiz-option-radio {
+  border-color: var(--color-primary);
+}
+
+.quiz-option.selected .quiz-option-radio::after,
+.quiz-option.correct .quiz-option-radio::after {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+.quiz-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.quiz-explanation-panel {
+  width: 280px;
+  flex-shrink: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+}
+
+.quiz-explanation-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.quiz-explanation-body {
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+.quiz-result-banner {
+  background: var(--color-success-bg);
+  border: 1px solid var(--color-success-border);
+  color: var(--color-success-text);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-size: 13.5px;
+  font-weight: 700;
+  margin-top: 16px;
+}
+
+.quiz-result-banner.wrong {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #b91c1c;
+}
+
+/* ---- Summary screen (setelah quiz selesai) ---- */
+
+.quiz-summary {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.quiz-summary-score-ring {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  margin: 24px auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: var(--color-primary-light);
+  border: 6px solid var(--color-primary);
+}
+
+.quiz-summary-score-ring .score-number {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.quiz-summary-score-ring .score-label {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+.quiz-summary-message {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.quiz-summary-submessage {
+  font-size: 13.5px;
+  color: var(--color-text-muted);
+  margin-bottom: 28px;
+}
+
+.quiz-summary-stats {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.quiz-summary-stat-card {
+  flex: 1;
+  max-width: 150px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+}
+
+.quiz-summary-stat-card .stat-number {
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.quiz-summary-stat-card.correct .stat-number { color: var(--color-success-text); }
+.quiz-summary-stat-card.incorrect .stat-number { color: #b91c1c; }
+
+.quiz-summary-stat-card .stat-label {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+.quiz-summary-breakdown {
+  text-align: left;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 8px;
+  margin-bottom: 24px;
+}
+
+.quiz-summary-breakdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 13.5px;
+}
+
+.quiz-summary-breakdown-item:last-child {
+  border-bottom: none;
+}
+
+.quiz-summary-breakdown-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.quiz-summary-breakdown-icon.correct { background: var(--color-success-text); }
+.quiz-summary-breakdown-icon.incorrect { background: #b91c1c; }
+
+.quiz-summary-breakdown-text {
+  flex: 1;
+  text-align: left;
+}
+
+.quiz-summary-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* =========================================================
+   HALAMAN: REFERENSI (pages/referensi.html)
+   ========================================================= */
+
+.referensi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 18px;
+}
+
+.referensi-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+}
+
+.referensi-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.referensi-card-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.referensi-card-title {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.referensi-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.referensi-list li {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--color-text);
+  padding-left: 18px;
+  position: relative;
+}
+
+.referensi-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+.referensi-list li a {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.referensi-list li a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .referensi-grid { grid-template-columns: 1fr; }
 }

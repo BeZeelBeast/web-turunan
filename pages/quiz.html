@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz — Turunan</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+</head>
+<body>
+  <div class="page">
+
+    <div id="navbar"></div>
+
+    <div class="page-body">
+      <main class="main-content" style="max-width:100%;">
+
+        <h1 class="materi-header">Quiz</h1>
+
+        <div class="quiz-layout mt-16" id="quiz-layout">
+
+          <!-- Panel progress & navigasi nomor soal -->
+          <div class="quiz-progress-panel">
+            <p class="quiz-progress-title">Progress</p>
+            <p class="quiz-progress-count" id="progress-count">0 / 10</p>
+            <div class="quiz-progress-bar-track">
+              <div class="quiz-progress-bar-fill" id="progress-bar-fill" style="width:0%;"></div>
+            </div>
+            <div class="quiz-number-grid" id="number-grid"></div>
+          </div>
+
+          <!-- Panel soal -->
+          <div class="quiz-question-panel">
+            <p class="quiz-question-label" id="question-label">Soal 1 dari 10</p>
+            <p class="quiz-question-text" id="question-text"></p>
+
+            <div id="options-container"></div>
+
+            <div id="result-banner-container"></div>
+
+            <div class="quiz-footer">
+              <button class="btn btn-secondary" id="btn-quiz-prev">Kembali</button>
+              <button class="btn btn-primary" id="btn-quiz-next">Selanjutnya</button>
+            </div>
+          </div>
+
+          <!-- Panel pembahasan -->
+          <div class="quiz-explanation-panel">
+            <p class="quiz-explanation-title">Pembahasan</p>
+            <div class="quiz-explanation-body" id="explanation-body">
+              <p class="text-muted">Pilih salah satu jawaban untuk melihat pembahasan.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Summary screen, muncul setelah quiz selesai -->
+        <div class="quiz-summary" id="quiz-summary" style="display:none;"></div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/navbar.js"></script>
+  <script>
+    renderNavbar("quiz");
+
+    /* =========================================================
+       DATA QUIZ — 10 soal pilihan ganda
+       correctIndex: index jawaban benar (0-based)
+       ========================================================= */
+    const QUIZ_DATA = [
+      {
+        question: "Turunan dari \\( f(x) = \\sin(2x) \\) adalah ...",
+        options: ["\\( \\cos(2x) \\)", "\\( 2\\cos(2x) \\)", "\\( -2\\sin(2x) \\)", "\\( 2\\sin(2x) \\)"],
+        correctIndex: 1,
+        explanation: "Gunakan chain rule: Jika \\( f(x) = \\sin(u) \\), maka \\( u = 2x \\), sehingga \\( f'(x) = \\cos(u) \\cdot u' \\). Di sini \\( u' = 2 \\), maka \\( f'(x) = \\cos(2x) \\cdot 2 = 2\\cos(2x) \\)",
+      },
+      {
+        question: "Turunan dari \\( f(x) = x^4 \\) adalah ...",
+        options: ["\\( x^3 \\)", "\\( 4x^4 \\)", "\\( 4x^3 \\)", "\\( 3x^3 \\)" ],
+        correctIndex: 2,
+        explanation: "Gunakan aturan pangkat: \\( (x^n)' = nx^{n-1} \\). Maka \\( (x^4)' = 4x^{4-1} = 4x^3 \\)",
+      },
+      {
+        question: "Turunan dari \\( f(x) = 5 \\) (fungsi konstan) adalah ...",
+        options: ["\\( 5 \\)", "\\( 0 \\)", "\\( 1 \\)", "\\( x \\)" ],
+        correctIndex: 1,
+        explanation: "Turunan dari fungsi konstan selalu bernilai \\( 0 \\), karena fungsi konstan tidak mengalami perubahan terhadap \\( x \\)",
+      },
+      {
+        question: "Jika \\( f(x) = x^2 \\sin x \\), maka \\( f'(x) \\) menggunakan product rule adalah ...",
+        options: [
+          "\\( 2x\\cos x \\)",
+          "\\( x^2\\cos x \\)",
+          "\\( 2x\\sin x + x^2\\cos x \\)",
+          "\\( 2x\\sin x - x^2\\cos x \\)",
+        ],
+        correctIndex: 2,
+        explanation: "Misalkan \\( u=x^2, v=\\sin x \\). Product rule: \\( f'(x) = u'v + uv' = 2x\\sin x + x^2\\cos x \\)",
+      },
+      {
+        question: "Turunan dari \\( f(x) = \\dfrac{x}{x+1} \\) menggunakan quotient rule adalah ...",
+        options: [
+          "\\( \\dfrac{1}{(x+1)^2} \\)",
+          "\\( \\dfrac{1}{x+1} \\)",
+          "\\( \\dfrac{x}{(x+1)^2} \\)",
+          "\\( \\dfrac{-1}{(x+1)^2} \\)",
+        ],
+        correctIndex: 0,
+        explanation: "Misalkan \\( u=x, v=x+1 \\). Quotient rule: \\( f'(x) = \\dfrac{u'v-uv'}{v^2} = \\dfrac{1(x+1)-x(1)}{(x+1)^2} = \\dfrac{1}{(x+1)^2} \\)",
+      },
+      {
+        question: "Turunan dari \\( f(x) = e^x \\) adalah ...",
+        options: ["\\( e^x \\)", "\\( xe^{x-1} \\)", "\\( e^{x-1} \\)", "\\( 1 \\)" ],
+        correctIndex: 0,
+        explanation: "Fungsi eksponensial natural \\( e^x \\) memiliki sifat khusus: turunannya sama dengan fungsi itu sendiri, yaitu \\( e^x \\)",
+      },
+      {
+        question: "Turunan dari \\( f(x) = \\ln x \\) adalah ...",
+        options: ["\\( \\ln x \\)", "\\( x \\)", "\\( \\dfrac{1}{x} \\)", "\\( e^x \\)" ],
+        correctIndex: 2,
+        explanation: "Turunan dari fungsi logaritma natural \\( \\ln x \\) adalah \\( \\dfrac{1}{x} \\), berlaku untuk \\( x > 0 \\)",
+      },
+      {
+        question: "Jika \\( f(x) = (2x+1)^3 \\), maka \\( f'(x) \\) menggunakan chain rule adalah ...",
+        options: [
+          "\\( 3(2x+1)^2 \\)",
+          "\\( 6(2x+1)^2 \\)",
+          "\\( 3(2x+1)^2 \\cdot 2 \\)",
+          "\\( 6x(2x+1)^2 \\)",
+        ],
+        correctIndex: 1,
+        explanation: "Misalkan \\( u=2x+1 \\), \\( f(x)=u^3 \\). Chain rule: \\( f'(x) = 3u^2 \\cdot u' = 3(2x+1)^2 \\cdot 2 = 6(2x+1)^2 \\)",
+      },
+      {
+        question: "Sebuah benda bergerak dengan posisi \\( s(t) = t^3 - 3t \\). Kecepatan benda adalah turunan dari posisi. Kecepatan saat \\( t=2 \\) adalah ...",
+        options: ["\\( 6 \\)", "\\( 9 \\)", "\\( 12 \\)", "\\( 2 \\)" ],
+        correctIndex: 1,
+        explanation: "\\( v(t) = s'(t) = 3t^2 - 3 \\). Substitusi \\( t=2 \\): \\( v(2) = 3(4) - 3 = 12 - 3 = 9 \\)",
+      },
+      {
+        question: "Turunan dari \\( f(x) = \\cos x \\) adalah ...",
+        options: ["\\( \\sin x \\)", "\\( -\\sin x \\)", "\\( \\cos x \\)", "\\( -\\cos x \\)" ],
+        correctIndex: 1,
+        explanation: "Turunan dari \\( \\cos x \\) adalah \\( -\\sin x \\). Ini berbeda dengan turunan \\( \\sin x \\) yang hasilnya \\( \\cos x \\) (tanpa tanda negatif)",
+      },
+    ];
+
+    /* =========================================================
+       STATE
+       ========================================================= */
+    let currentQuestion = 0;
+    const userAnswers = new Array(QUIZ_DATA.length).fill(null); // null = belum dijawab
+
+    function getAnsweredCount() {
+      return userAnswers.filter((a) => a !== null).length;
+    }
+
+    function renderNumberGrid() {
+      const grid = document.getElementById("number-grid");
+      grid.innerHTML = "";
+      QUIZ_DATA.forEach((_, i) => {
+        const btn = document.createElement("button");
+        btn.className = "quiz-number-btn";
+        btn.textContent = i + 1;
+        if (i === currentQuestion) btn.classList.add("current");
+        else if (userAnswers[i] !== null) btn.classList.add("answered");
+        btn.addEventListener("click", () => {
+          currentQuestion = i;
+          renderQuestion();
+        });
+        grid.appendChild(btn);
+      });
+    }
+
+    function renderProgress() {
+      const answered = getAnsweredCount();
+      document.getElementById("progress-count").textContent = `${answered} / ${QUIZ_DATA.length}`;
+      document.getElementById("progress-bar-fill").style.width = `${(answered / QUIZ_DATA.length) * 100}%`;
+    }
+
+    function renderQuestion() {
+      const q = QUIZ_DATA[currentQuestion];
+      const selected = userAnswers[currentQuestion];
+
+      document.getElementById("question-label").textContent = `Soal ${currentQuestion + 1} dari ${QUIZ_DATA.length}`;
+      document.getElementById("question-text").innerHTML = q.question;
+
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+      const letters = ["A", "B", "C", "D"];
+
+      q.options.forEach((opt, i) => {
+        const div = document.createElement("div");
+        div.className = "quiz-option";
+
+        if (selected !== null) {
+          if (i === q.correctIndex) div.classList.add("correct");
+          else if (i === selected && selected !== q.correctIndex) div.classList.add("incorrect");
+        }
+
+        div.innerHTML = `<span class="quiz-option-radio"></span><span>${letters[i]}. ${opt}</span>`;
+
+        if (selected === null) {
+          div.addEventListener("click", () => {
+            userAnswers[currentQuestion] = i;
+            renderQuestion();
+            renderNumberGrid();
+            renderProgress();
+          });
+        }
+
+        optionsContainer.appendChild(div);
+      });
+
+      // Result banner & pembahasan
+      const resultContainer = document.getElementById("result-banner-container");
+      const explanationBody = document.getElementById("explanation-body");
+
+      if (selected !== null) {
+        const isCorrect = selected === q.correctIndex;
+        resultContainer.innerHTML = `
+          <div class="quiz-result-banner ${isCorrect ? "" : "wrong"}">
+            ${isCorrect ? "Jawaban Benar! ✓" : `Jawaban Salah. Yang benar: ${letters[q.correctIndex]}`}
+          </div>`;
+        explanationBody.innerHTML = `<p>${q.explanation}</p>`;
+      } else {
+        resultContainer.innerHTML = "";
+        explanationBody.innerHTML = `<p class="text-muted">Pilih salah satu jawaban untuk melihat pembahasan.</p>`;
+      }
+
+      document.getElementById("btn-quiz-prev").disabled = currentQuestion === 0;
+      document.getElementById("btn-quiz-next").textContent =
+        currentQuestion === QUIZ_DATA.length - 1 ? "Selesai" : "Selanjutnya";
+
+      if (window.MathJax) {
+        MathJax.typesetPromise([
+          document.getElementById("question-text"),
+          optionsContainer,
+          explanationBody,
+        ]);
+      }
+    }
+
+    document.getElementById("btn-quiz-prev").addEventListener("click", () => {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+        renderNumberGrid();
+      }
+    });
+
+    document.getElementById("btn-quiz-next").addEventListener("click", () => {
+      if (currentQuestion < QUIZ_DATA.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+        renderNumberGrid();
+      } else {
+        showSummary();
+      }
+    });
+
+    /* =========================================================
+       SUMMARY SCREEN — ditampilkan setelah quiz selesai
+       ========================================================= */
+    function showSummary() {
+      const total = QUIZ_DATA.length;
+      const correctCount = QUIZ_DATA.filter((q, i) => userAnswers[i] === q.correctIndex).length;
+      const incorrectCount = total - correctCount;
+      const percentage = Math.round((correctCount / total) * 100);
+
+      let message, submessage;
+      if (percentage >= 80) {
+        message = "Kerja Bagus! 🎉";
+        submessage = "Pemahaman kamu tentang turunan sudah sangat baik.";
+      } else if (percentage >= 60) {
+        message = "Lumayan! 👍";
+        submessage = "Coba pelajari lagi bagian yang masih salah, ya.";
+      } else {
+        message = "Terus Berlatih! 💪";
+        submessage = "Jangan menyerah, ulangi materi dan coba lagi.";
+      }
+
+      const letters = ["A", "B", "C", "D"];
+      const breakdownHtml = QUIZ_DATA
+        .map((q, i) => {
+          const isCorrect = userAnswers[i] === q.correctIndex;
+          return `
+          <div class="quiz-summary-breakdown-item">
+            <span class="quiz-summary-breakdown-icon ${isCorrect ? "correct" : "incorrect"}">
+              ${isCorrect ? "✓" : "✕"}
+            </span>
+            <span class="quiz-summary-breakdown-text">
+              Soal ${i + 1}: ${
+                userAnswers[i] === null
+                  ? "Tidak dijawab"
+                  : isCorrect
+                  ? "Benar"
+                  : `Salah (jawaban kamu: ${letters[userAnswers[i]]}, benar: ${letters[q.correctIndex]})`
+              }
+            </span>
+          </div>`;
+        })
+        .join("");
+
+      document.getElementById("quiz-summary").innerHTML = `
+        <div class="quiz-summary-score-ring">
+          <span class="score-number">${percentage}%</span>
+          <span class="score-label">${correctCount}/${total} benar</span>
+        </div>
+        <p class="quiz-summary-message">${message}</p>
+        <p class="quiz-summary-submessage">${submessage}</p>
+
+        <div class="quiz-summary-stats">
+          <div class="quiz-summary-stat-card correct">
+            <p class="stat-number">${correctCount}</p>
+            <p class="stat-label">Benar</p>
+          </div>
+          <div class="quiz-summary-stat-card incorrect">
+            <p class="stat-number">${incorrectCount}</p>
+            <p class="stat-label">Salah</p>
+          </div>
+        </div>
+
+        <div class="quiz-summary-breakdown">${breakdownHtml}</div>
+
+        <div class="quiz-summary-actions">
+          <button class="btn btn-secondary" id="btn-review-quiz">Lihat Kembali Jawaban</button>
+          <button class="btn btn-primary" id="btn-retry-quiz">Ulangi Quiz</button>
+        </div>
+      `;
+
+      document.getElementById("quiz-layout").style.display = "none";
+      document.getElementById("quiz-summary").style.display = "block";
+
+      document.getElementById("btn-retry-quiz").addEventListener("click", resetQuiz);
+      document.getElementById("btn-review-quiz").addEventListener("click", () => {
+        currentQuestion = 0;
+        document.getElementById("quiz-summary").style.display = "none";
+        document.getElementById("quiz-layout").style.display = "flex";
+        renderQuestion();
+        renderNumberGrid();
+      });
+    }
+
+    function resetQuiz() {
+      userAnswers.fill(null);
+      currentQuestion = 0;
+      document.getElementById("quiz-summary").style.display = "none";
+      document.getElementById("quiz-layout").style.display = "flex";
+      renderNumberGrid();
+      renderProgress();
+      renderQuestion();
+    }
+
+    renderNumberGrid();
+    renderProgress();
+    renderQuestion();
+  </script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contoh Soal — Turunan</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+</head>
+<body>
+  <div class="page">
+
+    <div id="navbar"></div>
+
+    <div class="page-body">
+
+      <aside class="sidebar">
+        <p class="sidebar-title">Contoh Soal</p>
+        <ul class="sidebar-list" id="kategori-list">
+          <li><a href="#" data-kategori="dasar" class="active">5.1 Soal Dasar</a></li>
+          <li><a href="#" data-kategori="menengah">5.2 Soal Menengah</a></li>
+          <li><a href="#" data-kategori="aplikasi">5.3 Soal Aplikasi</a></li>
+          <li><a href="#" data-kategori="nyata">5.4 Aplikasi Nyata</a></li>
+        </ul>
+      </aside>
+
+      <main class="main-content">
+        <h1 class="materi-header" id="kategori-title">5.1 Soal Dasar</h1>
+
+        <div class="soal-card">
+          <div class="soal-text" id="soal-text"></div>
+
+          <button class="btn btn-secondary" id="btn-toggle-pembahasan">Tampilkan Pembahasan</button>
+
+          <div class="pembahasan-box" id="pembahasan-box" style="display:none;">
+            <p class="pembahasan-title">Pembahasan Langkah demi Langkah</p>
+            <div id="pembahasan-steps"></div>
+          </div>
+
+          <div class="soal-footer">
+            <button class="btn btn-secondary" id="btn-prev">&larr; Sebelumnya</button>
+            <span class="soal-pagination" id="soal-pagination">1 / 5</span>
+            <button class="btn btn-primary" id="btn-next">Selanjutnya &rarr;</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/navbar.js"></script>
+  <script>
+    renderNavbar("soal");
+
+    /* =========================================================
+       DATA SOAL
+       Tiap kategori berisi array soal: { soal, steps: [...], hasil }
+       steps dan hasil dirender dalam LaTeX (pakai MathJax).
+       ========================================================= */
+    const SOAL_DATA = {
+      dasar: {
+        title: "5.1 Soal Dasar",
+        items: [
+          {
+            soal: "Tentukan turunan dari \\( f(x) = 3x^2 + 4x - 5 \\)!",
+            steps: [
+              "\\( f(x) = 3x^2 + 4x - 5 \\)",
+              "\\( f'(x) = (3x^2)' + (4x)' - (5)' \\)",
+              "\\( f'(x) = 6x + 4 - 0 \\)",
+            ],
+            hasil: "Jadi, \\( f'(x) = 6x + 4 \\)",
+          },
+          {
+            soal: "Tentukan turunan dari \\( f(x) = x^5 - 2x^3 + 7 \\)!",
+            steps: [
+              "\\( f(x) = x^5 - 2x^3 + 7 \\)",
+              "\\( f'(x) = 5x^4 - 2(3x^2) + 0 \\)",
+            ],
+            hasil: "Jadi, \\( f'(x) = 5x^4 - 6x^2 \\)",
+          },
+          {
+            soal: "Tentukan turunan dari \\( f(x) = 8 \\) (fungsi konstan)!",
+            steps: [
+              "\\( f(x) = 8 \\) adalah fungsi konstan",
+              "Turunan dari konstanta selalu bernilai 0",
+            ],
+            hasil: "Jadi, \\( f'(x) = 0 \\)",
+          },
+          {
+            soal: "Tentukan turunan dari \\( f(x) = \\dfrac{1}{2}x^4 - 6x \\)!",
+            steps: [
+              "\\( f(x) = \\dfrac{1}{2}x^4 - 6x \\)",
+              "\\( f'(x) = \\dfrac{1}{2}(4x^3) - 6 \\)",
+            ],
+            hasil: "Jadi, \\( f'(x) = 2x^3 - 6 \\)",
+          },
+          {
+            soal: "Tentukan turunan dari \\( f(x) = \\sin x + \\cos x \\)!",
+            steps: [
+              "\\( f(x) = \\sin x + \\cos x \\)",
+              "\\( f'(x) = (\\sin x)' + (\\cos x)' \\)",
+            ],
+            hasil: "Jadi, \\( f'(x) = \\cos x - \\sin x \\)",
+          },
+        ],
+      },
+      menengah: {
+        title: "5.2 Soal Menengah",
+        items: [
+          {
+            soal: "Tentukan turunan dari \\( f(x) = x^2 \\sin x \\) menggunakan product rule!",
+            steps: [
+              "Misalkan \\( u = x^2 \\) dan \\( v = \\sin x \\)",
+              "\\( u' = 2x \\) dan \\( v' = \\cos x \\)",
+              "\\( f'(x) = u'v + uv' = 2x\\sin x + x^2 \\cos x \\)",
+            ],
+            hasil: "Jadi, \\( f'(x) = 2x\\sin x + x^2\\cos x \\)",
+          },
+          {
+            soal: "Tentukan turunan dari \\( f(x) = (x+1)(x-3) \\) menggunakan product rule!",
+            steps: [
+              "Misalkan \\( u = x+1 \\) dan \\( v = x-3 \\)",
+              "\\( u' = 1 \\) dan \\( v' = 1 \\)",
+              "\\( f'(x) = u'v + uv' = (1)(x-3) + (x+1)(1) \\)",
+              "\\( f'(x) = x - 3 + x + 1 \\)",
+            ],
+            hasil: "Jadi, \\( f'(x) = 2x - 2 \\)",
+          },
+          {
+            soal: "Tentukan turunan dari \\( f(x) = \\dfrac{x}{x+1} \\) menggunakan quotient rule!",
+            steps: [
+              "Misalkan \\( u = x \\) dan \\( v = x+1 \\)",
+              "\\( u' = 1 \\) dan \\( v' = 1 \\)",
+              "\\( f'(x) = \\dfrac{u'v - uv'}{v^2} = \\dfrac{1 \\cdot (x+1) - x \\cdot 1}{(x+1)^2} \\)",
+            ],
+            hasil: "Jadi, \\( f'(x) = \\dfrac{1}{(x+1)^2} \\)",
+          },
+          {
+            soal: "Tentukan turunan dari \\( f(x) = \\dfrac{x^2}{x-1} \\) menggunakan quotient rule!",
+            steps: [
+              "Misalkan \\( u = x^2 \\) dan \\( v = x-1 \\)",
+              "\\( u' = 2x \\) dan \\( v' = 1 \\)",
+              "\\( f'(x) = \\dfrac{2x(x-1) - x^2(1)}{(x-1)^2} = \\dfrac{2x^2 - 2x - x^2}{(x-1)^2} \\)",
+            ],
+            hasil: "Jadi, \\( f'(x) = \\dfrac{x^2 - 2x}{(x-1)^2} \\)",
+          },
+          {
+            soal: "Tentukan turunan dari \\( f(x) = e^x \\cos x \\) menggunakan product rule!",
+            steps: [
+              "Misalkan \\( u = e^x \\) dan \\( v = \\cos x \\)",
+              "\\( u' = e^x \\) dan \\( v' = -\\sin x \\)",
+              "\\( f'(x) = u'v + uv' = e^x \\cos x + e^x(-\\sin x) \\)",
+            ],
+            hasil: "Jadi, \\( f'(x) = e^x(\\cos x - \\sin x) \\)",
+          },
+        ],
+      },
+      aplikasi: {
+        title: "5.3 Soal Aplikasi",
+        items: [
+          {
+            soal: "Tentukan turunan dari \\( f(x) = \\sin(2x) \\) menggunakan chain rule!",
+            steps: [
+              "Misalkan \\( u = 2x \\), sehingga \\( f(x) = \\sin(u) \\)",
+              "\\( f'(x) = \\cos(u) \\cdot u' = \\cos(2x) \\cdot 2 \\)",
+            ],
+            hasil: "Jadi, \\( f'(x) = 2\\cos(2x) \\)",
+          },
+          {
+            soal: "Tentukan turunan dari \\( f(x) = (3x^2 - 1)^4 \\) menggunakan chain rule!",
+            steps: [
+              "Misalkan \\( u = 3x^2 - 1 \\), sehingga \\( f(x) = u^4 \\)",
+              "\\( u' = 6x \\)",
+              "\\( f'(x) = 4u^3 \\cdot u' = 4(3x^2-1)^3 \\cdot 6x \\)",
+            ],
+            hasil: "Jadi, \\( f'(x) = 24x(3x^2-1)^3 \\)",
+          },
+          {
+            soal: "Tentukan turunan dari \\( f(x) = \\cos(x^2) \\cdot x \\) (gabungan product rule &amp; chain rule)!",
+            steps: [
+              "Misalkan \\( u = x \\) dan \\( v = \\cos(x^2) \\)",
+              "\\( u' = 1 \\), dan dengan chain rule: \\( v' = -\\sin(x^2) \\cdot 2x \\)",
+              "\\( f'(x) = u'v + uv' = \\cos(x^2) + x(-2x\\sin(x^2)) \\)",
+            ],
+            hasil: "Jadi, \\( f'(x) = \\cos(x^2) - 2x^2\\sin(x^2) \\)",
+          },
+          {
+            soal: "Tentukan turunan dari \\( f(x) = e^{3x+1} \\) menggunakan chain rule!",
+            steps: [
+              "Misalkan \\( u = 3x+1 \\), sehingga \\( f(x) = e^u \\)",
+              "\\( u' = 3 \\)",
+              "\\( f'(x) = e^u \\cdot u' = e^{3x+1} \\cdot 3 \\)",
+            ],
+            hasil: "Jadi, \\( f'(x) = 3e^{3x+1} \\)",
+          },
+          {
+            soal: "Tentukan turunan dari \\( f(x) = \\ln(x^2+1) \\) menggunakan chain rule!",
+            steps: [
+              "Misalkan \\( u = x^2+1 \\), sehingga \\( f(x) = \\ln(u) \\)",
+              "\\( u' = 2x \\)",
+              "\\( f'(x) = \\dfrac{1}{u} \\cdot u' = \\dfrac{2x}{x^2+1} \\)",
+            ],
+            hasil: "Jadi, \\( f'(x) = \\dfrac{2x}{x^2+1} \\)",
+          },
+        ],
+      },
+      nyata: {
+        title: "5.4 Aplikasi Nyata",
+        items: [
+          {
+            soal: "Posisi sebuah mobil dinyatakan oleh \\( s(t) = 2t^3 - 3t^2 + 5 \\) (meter), dengan \\( t \\) dalam detik. Tentukan kecepatan mobil pada \\( t=2 \\) detik!",
+            steps: [
+              "Kecepatan adalah turunan pertama dari posisi: \\( v(t) = s'(t) \\)",
+              "\\( s'(t) = 6t^2 - 6t \\)",
+              "Substitusi \\( t=2 \\): \\( v(2) = 6(2)^2 - 6(2) = 24 - 12 \\)",
+            ],
+            hasil: "Jadi, kecepatan mobil pada \\( t=2 \\) detik adalah \\( 12 \\) m/s",
+          },
+          {
+            soal: "Biaya produksi suatu perusahaan dinyatakan oleh \\( C(x) = 0.05x^2 + 20x + 1000 \\) (ribu rupiah), dengan \\( x \\) adalah jumlah unit. Tentukan biaya marginal saat \\( x=100 \\) unit!",
+            steps: [
+              "Biaya marginal adalah turunan dari fungsi biaya: \\( C'(x) \\)",
+              "\\( C'(x) = 0.1x + 20 \\)",
+              "Substitusi \\( x=100 \\): \\( C'(100) = 0.1(100) + 20 = 10 + 20 \\)",
+            ],
+            hasil: "Jadi, biaya marginal pada \\( x=100 \\) unit adalah Rp30.000",
+          },
+          {
+            soal: "Suhu suatu ruangan berubah menurut \\( T(t) = -0.5t^2 + 4t + 20 \\) (°C), dengan \\( t \\) dalam jam. Tentukan laju perubahan suhu pada \\( t=3 \\) jam!",
+            steps: [
+              "Laju perubahan suhu adalah turunan dari \\( T(t) \\)",
+              "\\( T'(t) = -t + 4 \\)",
+              "Substitusi \\( t=3 \\): \\( T'(3) = -3 + 4 \\)",
+            ],
+            hasil: "Jadi, laju perubahan suhu pada \\( t=3 \\) jam adalah \\( 1 \\)°C/jam (sedang naik)",
+          },
+          {
+            soal: "Jumlah populasi bakteri dimodelkan oleh \\( P(t) = 200e^{0.1t} \\), dengan \\( t \\) dalam jam. Tentukan laju pertumbuhan populasi pada \\( t=0 \\) jam!",
+            steps: [
+              "Laju pertumbuhan adalah turunan dari \\( P(t) \\) menggunakan chain rule",
+              "\\( P'(t) = 200 e^{0.1t} \\cdot 0.1 = 20e^{0.1t} \\)",
+              "Substitusi \\( t=0 \\): \\( P'(0) = 20e^{0} = 20 \\cdot 1 \\)",
+            ],
+            hasil: "Jadi, laju pertumbuhan populasi pada \\( t=0 \\) jam adalah \\( 20 \\) bakteri/jam",
+          },
+          {
+            soal: "Sebuah benda dilempar vertikal dengan ketinggian \\( h(t) = -5t^2 + 20t \\) (meter), \\( t \\) dalam detik. Pada detik berapa benda mencapai titik tertinggi (kecepatan = 0)?",
+            steps: [
+              "Kecepatan adalah turunan dari \\( h(t) \\): \\( v(t) = h'(t) = -10t + 20 \\)",
+              "Titik tertinggi tercapai saat \\( v(t) = 0 \\)",
+              "\\( -10t + 20 = 0 \\Rightarrow t = 2 \\)",
+            ],
+            hasil: "Jadi, benda mencapai titik tertinggi pada \\( t=2 \\) detik",
+          },
+        ],
+      },
+    };
+
+    /* =========================================================
+       STATE & RENDER
+       ========================================================= */
+    let currentKategori = "dasar";
+    let currentIndex = 0;
+    let pembahasanVisible = false;
+
+    function renderSoal() {
+      const kategoriData = SOAL_DATA[currentKategori];
+      const item = kategoriData.items[currentIndex];
+
+      document.getElementById("kategori-title").textContent = kategoriData.title;
+      document.getElementById("soal-text").innerHTML =
+        `<span class="soal-number">${currentIndex + 1}.</span> ${item.soal}`;
+
+      const stepsHtml = item.steps
+        .map(
+          (step, i) => `
+        <div class="pembahasan-step">
+          <span class="pembahasan-step-number">${i + 1}</span>
+          <span class="pembahasan-step-content">${step}</span>
+        </div>`
+        )
+        .join("");
+      document.getElementById("pembahasan-steps").innerHTML =
+        stepsHtml + `<div class="pembahasan-result">${item.hasil}</div>`;
+
+      document.getElementById("soal-pagination").textContent =
+        `${currentIndex + 1} / ${kategoriData.items.length}`;
+
+      document.getElementById("btn-prev").disabled = currentIndex === 0;
+      document.getElementById("btn-next").textContent =
+        currentIndex === kategoriData.items.length - 1 ? "Selesai ✓" : "Selanjutnya →";
+
+      // reset pembahasan setiap pindah soal
+      pembahasanVisible = false;
+      document.getElementById("pembahasan-box").style.display = "none";
+      document.getElementById("btn-toggle-pembahasan").textContent = "Tampilkan Pembahasan";
+
+      // render ulang rumus matematika
+      if (window.MathJax) {
+        MathJax.typesetPromise([document.getElementById("soal-text"), document.getElementById("pembahasan-steps")]);
+      }
+    }
+
+    // ---- Pilih kategori ----
+    document.querySelectorAll("#kategori-list a").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        document.querySelectorAll("#kategori-list a").forEach((l) => l.classList.remove("active"));
+        link.classList.add("active");
+        currentKategori = link.dataset.kategori;
+        currentIndex = 0;
+        renderSoal();
+      });
+    });
+
+    // ---- Toggle pembahasan ----
+    document.getElementById("btn-toggle-pembahasan").addEventListener("click", () => {
+      pembahasanVisible = !pembahasanVisible;
+      document.getElementById("pembahasan-box").style.display = pembahasanVisible ? "block" : "none";
+      document.getElementById("btn-toggle-pembahasan").textContent = pembahasanVisible
+        ? "Sembunyikan Pembahasan"
+        : "Tampilkan Pembahasan";
+    });
+
+    // ---- Navigasi soal ----
+    document.getElementById("btn-prev").addEventListener("click", () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderSoal();
+      }
+    });
+
+    document.getElementById("btn-next").addEventListener("click", () => {
+      const total = SOAL_DATA[currentKategori].items.length;
+      if (currentIndex < total - 1) {
+        currentIndex++;
+        renderSoal();
+      }
+    });
+
+    renderSoal();
+  </script>
+</body>
+</html>

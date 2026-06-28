@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Materi — Turunan</title>
-  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="../css/style.css" />
   <!-- Desmos API: dipakai di halaman ini DAN halaman Visualisasi (4) -->
   <script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
   <!-- MathJax: dipakai untuk render rumus matematika \[ ... \] di semua halaman -->
@@ -103,55 +103,63 @@
   <script src="../js/desmos-helper.js"></script>
   <script>
     renderNavbar("materi");
+    renderPageBadge("2. MATERI");
 
+    // ---- Setup grafik Desmos untuk 2.1 Definisi Turunan ----
     const calcDefinisi = initDesmosCalculator("calculator-definisi", {
       expressionsCollapsed: false,
     });
 
     if (calcDefinisi) {
       calcDefinisi.setExpression({ id: "fn", latex: "f(x)=x^2" });
+      calcDefinisi.setExpression({ id: "var-x_0", latex: "x_{0}=1" });
+      calcDefinisi.setExpression({ id: "var-h", latex: "h=0.5" });
+      calcDefinisi.setExpression({
+        id: "slope-m",
+        latex: "m=\\frac{f(x_{0}+h)-f(x_{0})}{h}",
+        hidden: true,
+      });
       calcDefinisi.setExpression({
         id: "sekan",
-        latex: "\\frac{f(x+h)-f(x)}{h}(t-x)+f(x)",
+        latex: "y=m\\left(x-x_{0}\\right)+f\\left(x_{0}\\right)",
         color: Desmos.Colors.RED,
       });
-      calcDefinisi.setExpression({ id: "var-x", latex: "x=1" });
-      calcDefinisi.setExpression({ id: "var-h", latex: "h=0.5" });
-      calcDefinisi.setExpression({ id: "pointA", latex: "A=(x, f(x))", showLabel: true, label: "A" });
-      calcDefinisi.setExpression({ id: "pointB", latex: "B=(x+h, f(x+h))", showLabel: true, label: "B" });
+      calcDefinisi.setExpression({ id: "pointA", latex: "A=(x_{0}, f(x_{0}))", showLabel: true, label: "A" });
+      calcDefinisi.setExpression({ id: "pointB", latex: "B=(x_{0}+h, f(x_{0}+h))", showLabel: true, label: "B" });
       calcDefinisi.setMathBounds({ left: -4, right: 4, bottom: -2, top: 8 });
 
-      setupSliderBinding(calcDefinisi, "x", "slider-x", "label-x", { min: -3, max: 3, step: 0.1, decimals: 2 });
+      // Hubungkan slider HTML dengan variabel di Desmos
+      setupSliderBinding(calcDefinisi, "x_0", "slider-x", "label-x", { min: -3, max: 3, step: 0.1, decimals: 2 });
       setupSliderBinding(calcDefinisi, "h", "slider-h", "label-h", { min: 0.05, max: 2, step: 0.05, decimals: 2 });
     }
 
     // ---- Highlight menu sidebar sesuai section yang sedang dilihat ----
-const sections = ["definisi", "interpretasi", "notasi"];
+    const sections = ["definisi", "interpretasi", "notasi"];
 
-function setActiveLink(activeId) {
-  sections.forEach((id) => {
-    document.getElementById(`link-${id}`).classList.toggle("active", id === activeId);
-  });
-}
+    function setActiveLink(activeId) {
+      sections.forEach((id) => {
+        document.getElementById(`link-${id}`).classList.toggle("active", id === activeId);
+      });
+    }
 
-let isClickScrolling = false;
-sections.forEach((id) => {
-  document.getElementById(`link-${id}`).addEventListener("click", () => {
-    setActiveLink(id);
-    isClickScrolling = true;
-    window.setTimeout(() => { isClickScrolling = false; }, 600);
-  });
-});
+    let isClickScrolling = false;
+    sections.forEach((id) => {
+      document.getElementById(`link-${id}`).addEventListener("click", () => {
+        setActiveLink(id);
+        isClickScrolling = true;
+        window.setTimeout(() => { isClickScrolling = false; }, 600);
+      });
+    });
 
-window.addEventListener("scroll", () => {
-  if (isClickScrolling) return;
-  let current = sections[0];
-  sections.forEach((id) => {
-    const el = document.getElementById(id);
-    if (el && window.scrollY >= el.offsetTop - 100) current = id;
-  });
-  setActiveLink(current);
-});
+    window.addEventListener("scroll", () => {
+      if (isClickScrolling) return;
+      let current = sections[0];
+      sections.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 100) current = id;
+      });
+      setActiveLink(current);
+    });
   </script>
 </body>
 </html>
