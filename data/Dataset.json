@@ -1,0 +1,694 @@
+{
+  "meta": {
+    "judul": "Konten Website Pembelajaran Kalkulus",
+    "topik": "Turunan (Derivatives)",
+    "versi": "1.0",
+    "divisi": "Research & Dataset",
+    "keterangan": "Dataset lengkap untuk tim Frontend Developer"
+  },
+  "tujuan_pembelajaran": [
+    "Memahami konsep dasar turunan dan interpretasinya secara geometri",
+    "Menguasai aturan-aturan diferensiasi yang umum digunakan",
+    "Mampu menghitung turunan berbagai jenis fungsi",
+    "Mengaplikasikan turunan dalam masalah nyata seperti kecepatan, optimasi, dan gerak"
+  ],
+  "halaman": [
+    {
+      "id": "home",
+      "judul": "Beranda",
+      "deskripsi": "Pengantar singkat tentang turunan dan navigasi materi",
+      "konten_hero": {
+        "headline": "Pahami Turunan dengan Mudah & Interaktif",
+        "subheadline": "Pelajari konsep turunan dari dasar hingga aplikasi, lengkap dengan grafik interaktif Desmos.",
+        "cta": "Mulai Belajar"
+      }
+    },
+    {
+      "id": "materi",
+      "judul": "Materi Konsep",
+      "deskripsi": "Definisi, notasi, dan interpretasi geometri turunan"
+    },
+    {
+      "id": "rumus",
+      "judul": "Aturan Turunan",
+      "deskripsi": "Tabel lengkap aturan diferensiasi"
+    },
+    {
+      "id": "contoh",
+      "judul": "Contoh Soal",
+      "deskripsi": "Soal bertingkat beserta pembahasan step-by-step"
+    },
+    {
+      "id": "quiz",
+      "judul": "Kuis",
+      "deskripsi": "Uji pemahaman dengan soal pilihan ganda"
+    }
+  ],
+  "konsep_dasar": {
+    "definisi": {
+      "teks": "Turunan suatu fungsi f(x) di titik x adalah limit dari perbandingan perubahan nilai fungsi terhadap perubahan variabelnya ketika perubahan tersebut mendekati nol.",
+      "rumus_limit": "f'(x) = lim[h→0] (f(x+h) − f(x)) ⁄ h",
+      "rumus_titik": "f'(a) = lim[x→a] (f(x) − f(a)) ⁄ (x − a)"
+    },
+    "interpretasi_geometri": {
+      "teks": "Secara geometri, turunan f'(a) menyatakan gradien (kemiringan) garis singgung kurva y = f(x) di titik (a, f(a)).",
+      "desmos_config": {
+        "fungsi_contoh": "y = x²",
+        "tampilkan": [
+          "kurva_fungsi",
+          "garis_singgung",
+          "slider_titik"
+        ],
+        "warna": {
+          "fungsi": "biru",
+          "turunan": "merah",
+          "garis_singgung": "hijau"
+        },
+        "embed_url": "https://www.desmos.com/calculator/embed"
+      }
+    },
+    "notasi": [
+      {
+        "simbol": "f'(x)",
+        "dibaca": "f prime x",
+        "keterangan": "Notasi Lagrange — paling umum"
+      },
+      {
+        "simbol": "dy⁄dx",
+        "dibaca": "dy per dx",
+        "keterangan": "Notasi Leibniz"
+      },
+      {
+        "simbol": "y'",
+        "dibaca": "y prime",
+        "keterangan": "Bentuk singkat Lagrange"
+      },
+      {
+        "simbol": "Df(x)",
+        "dibaca": "D x dari f",
+        "keterangan": "Notasi Operator Euler"
+      },
+      {
+        "simbol": "f''(x)",
+        "dibaca": "f double prime x",
+        "keterangan": "Turunan kedua"
+      }
+    ]
+  },
+  "aturan_turunan": [
+    {
+      "kategori": "Fungsi Dasar",
+      "aturan": [
+        {
+          "fungsi": "c",
+          "turunan": "0",
+          "keterangan": "Turunan konstanta selalu nol"
+        },
+        {
+          "fungsi": "x",
+          "turunan": "1",
+          "keterangan": "Turunan x adalah 1"
+        },
+        {
+          "fungsi": "xⁿ",
+          "turunan": "n·xⁿ-¹",
+          "keterangan": "Aturan pangkat (power rule)"
+        },
+        {
+          "fungsi": "eˣ",
+          "turunan": "eˣ",
+          "keterangan": "Turunan eksponen natural"
+        },
+        {
+          "fungsi": "aˣ",
+          "turunan": "aˣ·ln(a)",
+          "keterangan": "Turunan eksponen umum"
+        },
+        {
+          "fungsi": "ln(x)",
+          "turunan": "1⁄x",
+          "keterangan": "Domain x > 0"
+        },
+        {
+          "fungsi": "log_a(x)",
+          "turunan": "1⁄(x·ln(a))",
+          "keterangan": "Logaritma basis a"
+        }
+      ]
+    },
+    {
+      "kategori": "Fungsi Trigonometri",
+      "aturan": [
+        {
+          "fungsi": "sin(x)",
+          "turunan": "cos(x)",
+          "keterangan": ""
+        },
+        {
+          "fungsi": "cos(x)",
+          "turunan": "-sin(x)",
+          "keterangan": ""
+        },
+        {
+          "fungsi": "tan(x)",
+          "turunan": "sec²(x)",
+          "keterangan": ""
+        },
+        {
+          "fungsi": "sec(x)",
+          "turunan": "sec(x)·tan(x)",
+          "keterangan": ""
+        },
+        {
+          "fungsi": "csc(x)",
+          "turunan": "-csc(x)·cot(x)",
+          "keterangan": ""
+        },
+        {
+          "fungsi": "cot(x)",
+          "turunan": "-csc²(x)",
+          "keterangan": ""
+        }
+      ]
+    },
+    {
+      "kategori": "Fungsi Invers Trigonometri",
+      "aturan": [
+        {
+          "fungsi": "arcsin(x)",
+          "turunan": "1⁄√(1−x²)",
+          "keterangan": "Domain -1 < x < 1"
+        },
+        {
+          "fungsi": "arccos(x)",
+          "turunan": "-1⁄√(1−x²)",
+          "keterangan": "Domain -1 < x < 1"
+        },
+        {
+          "fungsi": "arctan(x)",
+          "turunan": "1⁄(1+x²)",
+          "keterangan": ""
+        }
+      ]
+    },
+    {
+      "kategori": "Aturan Operasi",
+      "aturan": [
+        {
+          "nama": "Penjumlahan",
+          "rumus": "[f+g]' = f'+g'",
+          "contoh": "(x³+sin x)' = 3x²+cos x"
+        },
+        {
+          "nama": "Pengurangan",
+          "rumus": "[f-g]' = f'-g'",
+          "contoh": "(x²-ln x)' = 2x - 1⁄x"
+        },
+        {
+          "nama": "Perkalian",
+          "rumus": "[f·g]' = f'g + fg'",
+          "contoh": "(x²·sin x)' = 2x·sin x + x²·cos x"
+        },
+        {
+          "nama": "Pembagian",
+          "rumus": "[f⁄g]′ = (f′g − f·g′) ⁄ g²",
+          "contoh": "(sin x ⁄ x)′ = (x·cos x − sin x) ⁄ x²"
+        },
+        {
+          "nama": "Rantai",
+          "rumus": "[f(g(x))]' = f'(g(x))·g'(x)",
+          "contoh": "(sin(3x²))' = cos(3x²)·6x"
+        }
+      ]
+    }
+  ],
+  "dataset_fungsi": [
+    {
+      "id": "F01",
+      "kategori": "Polinomial",
+      "fungsi": "y = x²",
+      "turunan": "y' = 2x",
+      "domain": [
+        -5,
+        5
+      ],
+      "titik_kritis": [
+        {
+          "x": 0,
+          "jenis": "minimum",
+          "nilai": 0
+        }
+      ],
+      "desmos": "y=x^{2}",
+      "desmos_turunan": "y=2x",
+      "catatan_visualisasi": "Fungsi termudah untuk intro konsep turunan"
+    },
+    {
+      "id": "F02",
+      "kategori": "Polinomial",
+      "fungsi": "y = x³ - 3x",
+      "turunan": "y' = 3x² - 3",
+      "domain": [
+        -3,
+        3
+      ],
+      "titik_kritis": [
+        {
+          "x": 1,
+          "jenis": "minimum_lokal",
+          "nilai": -2
+        },
+        {
+          "x": -1,
+          "jenis": "maksimum_lokal",
+          "nilai": 2
+        }
+      ],
+      "desmos": "y=x^{3}-3x",
+      "desmos_turunan": "y=3x^{2}-3",
+      "catatan_visualisasi": "Demonstrasi titik kritis dan uji turunan kedua"
+    },
+    {
+      "id": "F03",
+      "kategori": "Polinomial",
+      "fungsi": "y = 2x⁴ - 8x²",
+      "turunan": "y' = 8x³ - 16x",
+      "domain": [
+        -3,
+        3
+      ],
+      "titik_kritis": [
+        {
+          "x": 0,
+          "jenis": "maksimum_lokal",
+          "nilai": 0
+        },
+        {
+          "x": "√2 ≈ 1.41",
+          "jenis": "minimum_lokal",
+          "nilai": -8
+        },
+        {
+          "x": "-√2 ≈ -1.41",
+          "jenis": "minimum_lokal",
+          "nilai": -8
+        }
+      ],
+      "desmos": "y=2x^{4}-8x^{2}",
+      "desmos_turunan": "y=8x^{3}-16x",
+      "catatan_visualisasi": "Baik untuk optimasi, ada 3 titik kritis"
+    },
+    {
+      "id": "T01",
+      "kategori": "Trigonometri",
+      "fungsi": "y = sin(x)",
+      "turunan": "y' = cos(x)",
+      "domain": [
+        0,
+        "4π"
+      ],
+      "desmos": "y=\\sin(x)",
+      "desmos_turunan": "y=\\cos(x)",
+      "catatan_visualisasi": "Tampilkan bersama untuk perbandingan fase"
+    },
+    {
+      "id": "T02",
+      "kategori": "Trigonometri",
+      "fungsi": "y = sin(2x)",
+      "turunan": "y' = 2cos(2x)",
+      "domain": [
+        0,
+        "2π"
+      ],
+      "desmos": "y=\\sin(2x)",
+      "desmos_turunan": "y=2\\cos(2x)",
+      "catatan_visualisasi": "Demonstrasi chain rule pada trig"
+    },
+    {
+      "id": "T03",
+      "kategori": "Trigonometri",
+      "fungsi": "y = x·sin(x)",
+      "turunan": "y' = sin(x) + x·cos(x)",
+      "domain": [
+        0,
+        "2π"
+      ],
+      "desmos": "y=x\\sin(x)",
+      "desmos_turunan": "y=\\sin(x)+x\\cos(x)",
+      "catatan_visualisasi": "Demonstrasi product rule"
+    },
+    {
+      "id": "E01",
+      "kategori": "Eksponen",
+      "fungsi": "y = eˣ",
+      "turunan": "y' = eˣ",
+      "domain": [
+        -3,
+        3
+      ],
+      "desmos": "y=e^{x}",
+      "desmos_turunan": "y=e^{x}",
+      "catatan_visualisasi": "Satu-satunya fungsi yang turunannya sama dengan dirinya"
+    },
+    {
+      "id": "E02",
+      "kategori": "Eksponen",
+      "fungsi": "y = e-ˣ²",
+      "turunan": "y' = -2x·e-ˣ²",
+      "domain": [
+        -3,
+        3
+      ],
+      "desmos": "y=e^{-x^{2}}",
+      "desmos_turunan": "y=-2xe^{-x^{2}}",
+      "catatan_visualisasi": "Bell curve / distribusi Gaussian, aplikasi menarik"
+    },
+    {
+      "id": "L01",
+      "kategori": "Logaritma",
+      "fungsi": "y = ln(x)",
+      "turunan": "y' = 1⁄x",
+      "domain": [
+        0.1,
+        10
+      ],
+      "desmos": "y=\\ln(x)",
+      "desmos_turunan": "y=\\frac{1}{x}",
+      "catatan_visualisasi": "Ingatkan domain x > 0"
+    }
+  ],
+  "contoh_soal": [
+    {
+      "id": "S01",
+      "level": "dasar",
+      "topik": "Aturan Pangkat",
+      "soal": "Tentukan turunan dari f(x) = 3x⁴ - 7x² + 5x - 2",
+      "langkah": [
+        "Gunakan aturan pangkat: d⁄dx[xⁿ] = n·xⁿ-¹",
+        "Turunkan tiap suku secara terpisah",
+        "f'(x) = 4·3x³ - 2·7x + 5 - 0",
+        "f'(x) = 12x³ - 14x + 5"
+      ],
+      "jawaban": "f'(x) = 12x³ - 14x + 5"
+    },
+    {
+      "id": "S02",
+      "level": "dasar",
+      "topik": "Turunan Trigonometri",
+      "soal": "Tentukan turunan dari f(x) = 3sin(x) - 2cos(x) + tan(x)",
+      "langkah": [
+        "d⁄dx[sin x] = cos x",
+        "d⁄dx[cos x] = -sin x",
+        "d⁄dx[tan x] = sec²x",
+        "f'(x) = 3cos(x) - 2(-sin x) + sec²x",
+        "f'(x) = 3cos(x) + 2sin(x) + sec²x"
+      ],
+      "jawaban": "f'(x) = 3cos(x) + 2sin(x) + sec²(x)"
+    },
+    {
+      "id": "S03",
+      "level": "dasar",
+      "topik": "Turunan Eksponen & Logaritma",
+      "soal": "Tentukan turunan dari f(x) = 5eˣ + 3ln(x)",
+      "langkah": [
+        "d⁄dx[eˣ] = eˣ",
+        "d⁄dx[ln x] = 1⁄x",
+        "f'(x) = 5eˣ + 3·(1⁄x)"
+      ],
+      "jawaban": "f′(x) = 5eˣ + 3⁄x"
+    },
+    {
+      "id": "S04",
+      "level": "menengah",
+      "topik": "Product Rule",
+      "soal": "Tentukan turunan dari f(x) = (2x² + 1)(3x - 4)",
+      "langkah": [
+        "Misalkan u = 2x² + 1  dan  v = 3x - 4",
+        "u' = 4x ,  v' = 3",
+        "f'(x) = u'v + uv'",
+        "f'(x) = 4x(3x-4) + (2x²+1)(3)",
+        "f'(x) = 12x² - 16x + 6x² + 3",
+        "f'(x) = 18x² - 16x + 3"
+      ],
+      "jawaban": "f'(x) = 18x² - 16x + 3"
+    },
+    {
+      "id": "S05",
+      "level": "menengah",
+      "topik": "Quotient Rule",
+      "soal": "Tentukan turunan dari f(x) = (x² + 1) ⁄ (x − 1)",
+      "langkah": [
+        "Misalkan u = x² + 1,  v = x - 1",
+        "u' = 2x ,  v' = 1",
+        "f′(x) = (u′v − uv′) ⁄ v²",
+        "f′(x) = (2x(x−1) − (x²+1)·1) ⁄ (x−1)²",
+        "f′(x) = (2x² − 2x − x² − 1) ⁄ (x−1)²",
+        "f′(x) = (x² − 2x − 1) ⁄ (x−1)²"
+      ],
+      "jawaban": "f′(x) = (x² − 2x − 1) ⁄ (x−1)²"
+    },
+    {
+      "id": "S06",
+      "level": "menengah",
+      "topik": "Chain Rule",
+      "soal": "Tentukan turunan dari f(x) = (3x² + 2)⁵",
+      "langkah": [
+        "Misalkan u = 3x² + 2  →  f(x) = u⁵",
+        "du⁄dx = 6x",
+        "df⁄du = 5u⁴",
+        "f'(x) = 5u⁴ · 6x",
+        "f'(x) = 30x(3x² + 2)⁴"
+      ],
+      "jawaban": "f'(x) = 30x(3x² + 2)⁴"
+    },
+    {
+      "id": "S07",
+      "level": "aplikasi",
+      "topik": "Kecepatan & Percepatan",
+      "soal": "Sebuah benda bergerak dengan posisi s(t) = t³ - 6t² + 9t + 2 (meter, t dalam detik). Tentukan: a) kecepatan v(t), b) percepatan a(t), c) kecepatan pada t = 2",
+      "langkah": [
+        "a) v(t) = s'(t) = 3t² - 12t + 9",
+        "b) a(t) = v'(t) = s''(t) = 6t - 12",
+        "c) v(2) = 3(4) - 12(2) + 9 = 12 - 24 + 9 = -3 m/s",
+        "Tanda negatif: benda bergerak mundur saat t = 2"
+      ],
+      "jawaban": {
+        "v_t": "3t² - 12t + 9",
+        "a_t": "6t - 12",
+        "v_at_t2": "-3 m/s"
+      }
+    },
+    {
+      "id": "S08",
+      "level": "aplikasi",
+      "topik": "Nilai Maksimum & Minimum",
+      "soal": "Tentukan nilai maksimum dan minimum lokal dari f(x) = x³ - 3x² - 9x + 5",
+      "langkah": [
+        "f'(x) = 3x² - 6x - 9 = 0",
+        "3(x² - 2x - 3) = 0",
+        "3(x-3)(x+1) = 0  →  x = 3 atau x = -1",
+        "f''(x) = 6x - 6",
+        "f''(-1) = -12 < 0  →  x = -1 adalah maksimum lokal",
+        "f''(3) = 12 > 0   →  x = 3 adalah minimum lokal",
+        "f(-1) = -1 - 3 + 9 + 5 = 10  (nilai maksimum lokal)",
+        "f(3) = 27 - 27 - 27 + 5 = -22 (nilai minimum lokal)"
+      ],
+      "jawaban": {
+        "maksimum_lokal": {
+          "x": -1,
+          "nilai": 10
+        },
+        "minimum_lokal": {
+          "x": 3,
+          "nilai": -22
+        }
+      }
+    }
+  ],
+  "quiz": [
+    {
+      "id": "Q01",
+      "soal": "Turunan dari f(x) = 6x³ adalah...",
+      "pilihan": [
+        "18x²",
+        "6x²",
+        "18x³",
+        "3x²"
+      ],
+      "jawaban": "18x²",
+      "penjelasan": "Gunakan aturan pangkat: d⁄dx[6x³] = 3·6x² = 18x²"
+    },
+    {
+      "id": "Q02",
+      "soal": "Jika f(x) = sin(x), maka f'(x) adalah...",
+      "pilihan": [
+        "cos(x)",
+        "-cos(x)",
+        "-sin(x)",
+        "tan(x)"
+      ],
+      "jawaban": "cos(x)",
+      "penjelasan": "Turunan sin(x) = cos(x)"
+    },
+    {
+      "id": "Q03",
+      "soal": "Turunan dari y = e²ˣ adalah...",
+      "pilihan": [
+        "2e²ˣ",
+        "e²ˣ",
+        "2xeˣ",
+        "eˣ"
+      ],
+      "jawaban": "2e²ˣ",
+      "penjelasan": "Chain rule: d⁄dx[e²ˣ] = e²ˣ·2 = 2e²ˣ"
+    },
+    {
+      "id": "Q04",
+      "soal": "Turunan dari f(x) = ln(3x) adalah...",
+      "pilihan": [
+        "1⁄x",
+        "3⁄x",
+        "1⁄(3x)",
+        "3ln(x)"
+      ],
+      "jawaban": "1⁄x",
+      "penjelasan": "d⁄dx[ln(3x)] = 1⁄(3x)·3 = 1⁄x"
+    },
+    {
+      "id": "Q05",
+      "soal": "Jika f(x) = x²·cos(x), maka f'(x) = ...",
+      "pilihan": [
+        "2x·cos(x) - x²·sin(x)",
+        "2x·cos(x)",
+        "-x²·sin(x)",
+        "2x·sin(x)"
+      ],
+      "jawaban": "2x·cos(x) - x²·sin(x)",
+      "penjelasan": "Product rule: (x²)'cos(x) + x²(cos(x))' = 2x·cos x - x²·sin x"
+    },
+    {
+      "id": "Q06",
+      "soal": "Titik kritis f(x) = x² - 4x + 3 terjadi di x = ...",
+      "pilihan": [
+        "x = 2",
+        "x = 1",
+        "x = 3",
+        "x = -2"
+      ],
+      "jawaban": "x = 2",
+      "penjelasan": "f'(x) = 2x - 4 = 0  →  x = 2"
+    },
+    {
+      "id": "Q07",
+      "soal": "Turunan dari f(x) = (x+1)⁴ menggunakan chain rule adalah...",
+      "pilihan": [
+        "4(x+1)³",
+        "4x³",
+        "(x+1)³",
+        "4(x+1)⁴"
+      ],
+      "jawaban": "4(x+1)³",
+      "penjelasan": "d⁄dx[(x+1)⁴] = 4(x+1)³·1 = 4(x+1)³"
+    },
+    {
+      "id": "Q08",
+      "soal": "Jika posisi s(t) = t², maka kecepatan v(t) = ...",
+      "pilihan": [
+        "2t",
+        "t²",
+        "2",
+        "t"
+      ],
+      "jawaban": "2t",
+      "penjelasan": "v(t) = s'(t) = 2t"
+    },
+    {
+      "id": "Q09",
+      "soal": "Turunan ke-2 dari f(x) = x⁴ adalah...",
+      "pilihan": [
+        "12x²",
+        "4x³",
+        "24x",
+        "x²"
+      ],
+      "jawaban": "12x²",
+      "penjelasan": "f'(x) = 4x³ → f''(x) = 12x²"
+    },
+    {
+      "id": "Q10",
+      "soal": "Turunan dari f(x) = tan(x) adalah...",
+      "pilihan": [
+        "sec²(x)",
+        "-csc²(x)",
+        "cos²(x)",
+        "1⁄cos(x)"
+      ],
+      "jawaban": "sec²(x)",
+      "penjelasan": "d⁄dx[tan x] = sec²x"
+    }
+  ],
+  "referensi": {
+    "buku": [
+      {
+        "penulis": "Stewart, J.",
+        "tahun": 2016,
+        "judul": "Calculus: Early Transcendentals (8th ed.)",
+        "penerbit": "Cengage Learning"
+      },
+      {
+        "penulis": "Anton, Bivens, Davis",
+        "tahun": 2012,
+        "judul": "Calculus (10th ed.)",
+        "penerbit": "John Wiley & Sons"
+      },
+      {
+        "penulis": "Purcell, Varberg, Rigdon",
+        "tahun": 2007,
+        "judul": "Kalkulus (Edisi 9)",
+        "penerbit": "Erlangga"
+      },
+      {
+        "penulis": "Martono, K.",
+        "tahun": 2014,
+        "judul": "Kalkulus",
+        "penerbit": "Erlangga"
+      }
+    ],
+    "online": [
+      {
+        "nama": "Khan Academy",
+        "url": "https://www.khanacademy.org/math/differential-calculus",
+        "keterangan": "Differential Calculus"
+      },
+      {
+        "nama": "MIT OpenCourseWare",
+        "url": "https://ocw.mit.edu/courses/18-01sc",
+        "keterangan": "Single Variable Calculus"
+      },
+      {
+        "nama": "Paul's Online Math Notes",
+        "url": "https://tutorial.math.lamar.edu/Classes/CalcI/DerivativeIntro.aspx",
+        "keterangan": "Derivatives"
+      },
+      {
+        "nama": "3Blue1Brown",
+        "url": "https://www.youtube.com/watch?v=WUvTyaaNkzM",
+        "keterangan": "Essence of Calculus"
+      }
+    ],
+    "tools_visualisasi": [
+      {
+        "nama": "Desmos Calculator",
+        "url": "https://www.desmos.com/calculator"
+      },
+      {
+        "nama": "Desmos Embed API",
+        "url": "https://www.desmos.com/api/v1.7/docs/index.html"
+      },
+      {
+        "nama": "GeoGebra",
+        "url": "https://www.geogebra.org"
+      }
+    ]
+  }
+}
