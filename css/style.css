@@ -330,6 +330,7 @@ button {
 @media (max-width: 700px) {
   .page-body { flex-direction: column; }
   .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--color-border); }
+  .viz-side { width: 100%; border-right: none; border-bottom: 1px solid var(--color-border); }
 }
 
 /* =========================================================
@@ -530,6 +531,102 @@ button {
 
 
 
+
+/* =========================================================
+   HALAMAN: VISUALISASI (pages/visualisasi.html)
+   ========================================================= */
+
+.viz-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 18px 0 16px;
+}
+
+.viz-tab {
+  padding: 9px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.viz-tab:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.viz-tab.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.viz-panel-body {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.viz-side {
+  width: 230px;
+  flex-shrink: 0;
+  background: var(--color-primary-light);
+  padding: 20px;
+  border-right: 1px solid var(--color-border);
+}
+
+.viz-formula-label {
+  font-size: 14.5px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+
+.viz-formula-label .viz-deriv {
+  display: block;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.viz-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.viz-checkbox input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+}
+
+.viz-note {
+  margin-top: 18px;
+  font-size: 12.5px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.viz-panel-body .desmos-calc {
+  flex: 1;
+  min-width: 280px;
+  width: auto;
+  height: 380px;
+}
+
+.viz-empty {
+  padding: 24px;
+  color: var(--color-text-muted);
+  font-size: 13.5px;
+}
 
 /* =========================================================
    HALAMAN: ATURAN TURUNAN (pages/aturan-turunan.html)
