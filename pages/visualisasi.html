@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualisasi — Turunan</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <!-- Desmos API: dipakai juga di materi.html -->
+  <script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+  <!-- MathJax: untuk render rumus matematika -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+</head>
+<body>
+  <div class="page">
+
+    <div id="navbar"></div>
+
+    <div class="page-body">
+
+      <aside class="sidebar">
+        <p class="sidebar-title">Visualisasi</p>
+        <ul class="sidebar-list">
+          <li><a href="#polinomial" class="active" id="link-polinomial">4.1 Fungsi Polinomial</a></li>
+          <li><a href="#trigonometri" id="link-trigonometri">4.2 Fungsi Trigonometri</a></li>
+          <li><a href="#eksponen" id="link-eksponen">4.3 Eksponen &amp; Logaritma</a></li>
+        </ul>
+      </aside>
+
+      <main class="main-content">
+
+        <!-- 4.1 FUNGSI POLINOMIAL -->
+        <section id="polinomial">
+          <h1 class="materi-header">4.1 Grafik Fungsi Polinomial</h1>
+          <p class="materi-intro">
+            Pilih salah satu contoh fungsi (F01–F03), atau pilih tab <strong>Kustom</strong> untuk
+            mengatur sendiri koefisien <em>a, b, c, d</em> dari fungsi kubik lewat slider.
+          </p>
+          <div id="viz-polinomial"><p class="viz-empty">Memuat data fungsi…</p></div>
+        </section>
+
+        <!-- 4.2 FUNGSI TRIGONOMETRI -->
+        <section id="trigonometri" class="mt-32">
+          <h1 class="materi-header">4.2 Grafik Fungsi Trigonometri</h1>
+          <p class="materi-intro">
+            Bandingkan beberapa contoh fungsi trigonometri, atau pakai tab <strong>Kustom</strong>
+            untuk mengubah amplitudo, frekuensi, fase, dan pergeseran vertikal sendiri.
+          </p>
+          <div id="viz-trigonometri"><p class="viz-empty">Memuat data fungsi…</p></div>
+        </section>
+
+        <!-- 4.3 EKSPONEN & LOGARITMA -->
+        <section id="eksponen" class="mt-32">
+          <h1 class="materi-header">4.3 Grafik Fungsi Eksponen &amp; Logaritma</h1>
+          <p class="materi-intro">
+            Lihat contoh fungsi eksponen dan logaritma, atau pakai tab <strong>Kustom</strong>
+            untuk eksplorasi bebas dengan slider.
+          </p>
+          <div id="viz-eksponen"><p class="viz-empty">Memuat data fungsi…</p></div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/navbar.js"></script>
+  <script src="../js/desmos-helper.js"></script>
+  <script>
+    renderNavbar("visualisasi");
+
+    /* =========================================================
+       Helper: parsing nilai domain yang bisa berupa angka biasa
+       atau string simbolik seperti "4π" / "2π"
+       ========================================================= */
+    function parseDomainValue(v) {
+      if (typeof v === "number") return v;
+      if (typeof v !== "string") return NaN;
+      const s = v.trim();
+      if (s.includes("π")) {
+        const coefStr = s.replace("π", "").trim();
+        const coef = coefStr === "" || coefStr === "+" ? 1 : (coefStr === "-" ? -1 : parseFloat(coefStr));
+        return coef * Math.PI;
+      }
+      return parseFloat(s);
+    }
+
+    /* =========================================================
+       Konfigurasi mode "Kustom" (slider a/b/c/d) per kategori
+       ========================================================= */
+    const CUSTOM_CONFIG = {
+      poly: {
+        desmosLatex: "f(x)=ax^{3}+bx^{2}+cx+d",
+        formulaText: "f(x) = ax\u00b3 + bx\u00b2 + cx + d",
+        domain: [-6, 6],
+        yBounds: { bottom: -12, top: 12 },
+        params: [
+          { key: "a", min: -3, max: 3, step: 0.1, default: 1 },
+          { key: "b", min: -3, max: 3, step: 0.1, default: 0.5 },
+          { key: "c", min: -3, max: 3, step: 0.1, default: 0.5 },
+          { key: "d", min: -5, max: 5, step: 0.5, default: 0.5 },
+        ],
+      },
+      trig: {
+        desmosLatex: "f(x)=a\\sin(bx+c)+d",
+        formulaText: "f(x) = a\u00b7sin(bx + c) + d",
+        domain: [-12, 12],
+        yBounds: { bottom: -4, top: 4 },
+        params: [
+          { key: "a", min: -3, max: 3, step: 0.1, default: 1 },
+          { key: "b", min: -3, max: 3, step: 0.1, default: 0.5 },
+          { key: "c", min: -3, max: 3, step: 0.1, default: 0.5 },
+          { key: "d", min: -3, max: 3, step: 0.1, default: 0.5 },
+        ],
+      },
+      explog: {
+        desmosLatex: "f(x)=a\\cdot e^{b(x-d)}+c",
+        formulaText: "f(x) = a\u00b7e^(b(x\u2212d)) + c",
+        domain: [-6, 10],
+        yBounds: { bottom: -6, top: 20 },
+        params: [
+          { key: "a", min: -3, max: 3, step: 0.1, default: 1 },
+          { key: "b", min: -2, max: 2, step: 0.1, default: 0.5 },
+          { key: "c", min: -3, max: 3, step: 0.1, default: 0.5 },
+          { key: "d", min: -3, max: 3, step: 0.5, default: 0.5 },
+        ],
+      },
+    };
+
+    /* Batas tampilan grafik (y) per kategori, untuk mode preset */
+    const Y_BOUNDS = {
+      Polinomial: { bottom: -12, top: 12 },
+      Trigonometri: { bottom: -4, top: 4 },
+      Eksponen: { bottom: -5, top: 20 },
+      Logaritma: { bottom: -5, top: 20 },
+    };
+
+    /* =========================================================
+       Membangun satu section visualisasi (tab preset + Kustom)
+       ========================================================= */
+    function buildVizSection(containerId, prefix, items, panelTitle) {
+      const container = document.getElementById(containerId);
+      const cfg = CUSTOM_CONFIG[prefix];
+
+      if ((!items || items.length === 0) && !cfg) {
+        container.innerHTML = '<p class="viz-empty">Belum ada data fungsi untuk kategori ini.</p>';
+        return;
+      }
+
+      const presetTabsHtml = (items || [])
+        .map((it, i) => `<button class="viz-tab${i === 0 ? " active" : ""}" data-id="${it.id}">${it.id}</button>`)
+        .join("");
+      const customTabHtml = cfg ? `<button class="viz-tab" data-id="custom">Kustom</button>` : "";
+
+      const slidersHtml = cfg
+        ? cfg.params
+            .map(
+              (p) => `
+              <div class="desmos-slider-group">
+                <label for="${prefix}-slider-${p.key}">${p.key} = <span id="${prefix}-label-${p.key}">${p.default.toFixed(2)}</span></label>
+                <input type="range" id="${prefix}-slider-${p.key}" min="${p.min}" max="${p.max}" step="${p.step}" value="${p.default}" />
+              </div>`
+            )
+            .join("")
+        : "";
+
+      container.innerHTML = `
+        <div class="viz-tabs">${presetTabsHtml}${customTabHtml}</div>
+        <div class="desmos-panel">
+          <div class="desmos-panel-header">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+            ${panelTitle}
+          </div>
+          <div class="viz-panel-body">
+            <div class="viz-side">
+              <p class="viz-formula-label" id="${prefix}-formula"></p>
+              <label class="viz-checkbox"><input type="checkbox" id="${prefix}-chk-f" checked /> f(x)</label>
+              <label class="viz-checkbox"><input type="checkbox" id="${prefix}-chk-fp" checked /> f'(x)</label>
+              <p class="viz-note" id="${prefix}-note"></p>
+            </div>
+            <div id="${prefix}-calc" class="desmos-calc"></div>
+          </div>
+          <div class="desmos-controls" id="${prefix}-controls" style="display:none;">
+            ${slidersHtml}
+          </div>
+        </div>
+      `;
+
+      const calc = initDesmosCalculator(`${prefix}-calc`, { expressionsCollapsed: true });
+      let currentItem = items && items[0];
+
+      function applyVisibility() {
+        if (!calc) return;
+        const fChecked = document.getElementById(`${prefix}-chk-f`).checked;
+        const fpChecked = document.getElementById(`${prefix}-chk-fp`).checked;
+        calc.setExpression({ id: "fn", hidden: !fChecked });
+        calc.setExpression({ id: "fnp", hidden: !fpChecked });
+      }
+
+      function renderPreset(item) {
+        currentItem = item;
+        document.getElementById(`${prefix}-controls`).style.display = "none";
+        document.getElementById(`${prefix}-formula`).innerHTML =
+          item.fungsi + '<span class="viz-deriv">' + item.turunan + "</span>";
+
+        if (calc) {
+          calc.setBlank();
+          calc.setExpression({ id: "fn", latex: item.desmos, color: Desmos.Colors.BLUE });
+          calc.setExpression({ id: "fnp", latex: item.desmos_turunan, color: Desmos.Colors.RED });
+
+          const dMin = parseDomainValue(item.domain && item.domain[0]);
+          const dMax = parseDomainValue(item.domain && item.domain[1]);
+          const yb = Y_BOUNDS[item.kategori] || { bottom: -10, top: 10 };
+          if (!isNaN(dMin) && !isNaN(dMax) && dMax > dMin) {
+            const pad = (dMax - dMin) * 0.1;
+            calc.setMathBounds({ left: dMin - pad, right: dMax + pad, bottom: yb.bottom, top: yb.top });
+          }
+          applyVisibility();
+        }
+
+        const noteParts = [];
+        if (item.catatan_visualisasi) noteParts.push(item.catatan_visualisasi);
+        if (item.titik_kritis && item.titik_kritis.length) {
+          const tk = item.titik_kritis
+            .map((t) => `x=${t.x} (${String(t.jenis).replace(/_/g, " ")}, nilai ${t.nilai})`)
+            .join("; ");
+          noteParts.push("Titik kritis: " + tk);
+        }
+        document.getElementById(`${prefix}-note`).textContent = noteParts.join(" \u2014 ");
+      }
+
+      function activateCustom() {
+        if (!cfg) return;
+        document.getElementById(`${prefix}-controls`).style.display = "flex";
+        document.getElementById(`${prefix}-formula`).innerHTML = cfg.formulaText;
+        document.getElementById(`${prefix}-note`).textContent =
+          "Geser slider a, b, c, d untuk membuat fungsimu sendiri dan amati bagaimana f'(x) ikut berubah.";
+
+        if (calc) {
+          calc.setBlank();
+          calc.setExpression({ id: "fn", latex: cfg.desmosLatex, color: Desmos.Colors.BLUE });
+          calc.setExpression({ id: "fnp", latex: "g(x)=f'(x)", color: Desmos.Colors.RED });
+          cfg.params.forEach((p) => {
+            const el = document.getElementById(`${prefix}-slider-${p.key}`);
+            const val = el ? el.value : p.default;
+            calc.setExpression({ id: `var-${p.key}`, latex: `${p.key}=${val}` });
+          });
+          calc.setMathBounds({ left: cfg.domain[0], right: cfg.domain[1], bottom: cfg.yBounds.bottom, top: cfg.yBounds.top });
+          applyVisibility();
+        }
+      }
+
+      // Binding slider Kustom (sekali saja, tapi cuma berefek kalau lagi di mode Kustom)
+      if (cfg) {
+        cfg.params.forEach((p) => {
+          const el = document.getElementById(`${prefix}-slider-${p.key}`);
+          el.addEventListener("input", (e) => {
+            const val = parseFloat(e.target.value);
+            document.getElementById(`${prefix}-label-${p.key}`).textContent = val.toFixed(2);
+            if (calc) calc.setExpression({ id: `var-${p.key}`, latex: `${p.key}=${val}` });
+          });
+        });
+      }
+
+      container.querySelectorAll(".viz-tab").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          container.querySelectorAll(".viz-tab").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          if (btn.dataset.id === "custom") {
+            activateCustom();
+          } else {
+            const item = items.find((it) => it.id === btn.dataset.id);
+            renderPreset(item);
+          }
+        });
+      });
+
+      document.getElementById(`${prefix}-chk-f`).addEventListener("change", applyVisibility);
+      document.getElementById(`${prefix}-chk-fp`).addEventListener("change", applyVisibility);
+
+      if (items && items.length > 0) {
+        renderPreset(items[0]);
+      } else {
+        const firstTab = container.querySelector(".viz-tab");
+        if (firstTab) firstTab.classList.add("active");
+        activateCustom();
+      }
+    }
+
+    /* =========================================================
+       Ambil data dari data/Dataset.json, lalu bangun ketiga section
+       ========================================================= */
+    fetch("/data/Dataset.json")
+      .then((res) => {
+        if (!res.ok) throw new Error("Gagal memuat Dataset.json (status " + res.status + ")");
+        return res.json();
+      })
+      .then((data) => {
+        const fungsi = data.dataset_fungsi || [];
+        const poly = fungsi.filter((f) => f.kategori === "Polinomial");
+        const trig = fungsi.filter((f) => f.kategori === "Trigonometri");
+        const explog = fungsi.filter((f) => f.kategori === "Eksponen" || f.kategori === "Logaritma");
+
+        buildVizSection("viz-polinomial", "poly", poly, "Grafik Fungsi Polinomial");
+        buildVizSection("viz-trigonometri", "trig", trig, "Grafik Fungsi Trigonometri");
+        buildVizSection("viz-eksponen", "explog", explog, "Grafik Fungsi Eksponen dan Logaritma");
+      })
+      .catch((err) => {
+        console.error(err);
+        // Dataset gagal dimuat — tetap bangun mode Kustom saja supaya halaman tidak kosong total
+        buildVizSection("viz-polinomial", "poly", [], "Grafik Fungsi Polinomial");
+        buildVizSection("viz-trigonometri", "trig", [], "Grafik Fungsi Trigonometri");
+        buildVizSection("viz-eksponen", "explog", [], "Grafik Fungsi Eksponen dan Logaritma");
+      });
+
+    // ---- Highlight menu sidebar sesuai section yang sedang dilihat ----
+    const sections = ["polinomial", "trigonometri", "eksponen"];
+
+    function setActiveLink(activeId) {
+      sections.forEach((id) => {
+        document.getElementById(`link-${id}`).classList.toggle("active", id === activeId);
+      });
+    }
+
+    let isClickScrolling = false;
+    sections.forEach((id) => {
+      document.getElementById(`link-${id}`).addEventListener("click", () => {
+        setActiveLink(id);
+        isClickScrolling = true;
+        window.setTimeout(() => { isClickScrolling = false; }, 600);
+      });
+    });
+
+    window.addEventListener("scroll", () => {
+      if (isClickScrolling) return;
+      let current = sections[0];
+      sections.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 100) current = id;
+      });
+      setActiveLink(current);
+    });
+  </script>
+</body>
+</html>
